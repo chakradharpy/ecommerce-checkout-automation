@@ -1,0 +1,27 @@
+
+{
+    "product_name": "tshirt",
+      "name": "john",
+      "email": "smith@demo.in",
+      "password": "Test@123",
+      "dob_day": "10",
+      "dob_month": "5",
+      "dob_year": "1990",
+      "first_name": "John",
+      "last_name": "Doe",
+      "company": "TestCorp",
+      "address1": "123 Main St",
+      "address2": "Suite 1",
+      "country": "India",
+      "state": "Delhi",
+      "city": "New Delhi",
+      "zipcode": "110001",
+      "mobile": "9876543210",
+      "cardname": "Smith",
+      "cardnumber": "378282246310005",
+      "cvcnumber"  : "311",
+      "exp_month" : "11",
+      "exp_year" : "2027"
+    }
+    
+  
