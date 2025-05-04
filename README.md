@@ -10,7 +10,7 @@
 
 # Clone the repository:
 
-git clone https://github.com/your-username/ecommerce-checkout-automation.git
+git clone https://github.com/chakradharpy/ecommerce-checkout-automation.git
 cd ecommerce-checkout-automation
 
 # Install dependencies
