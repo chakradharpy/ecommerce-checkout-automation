@@ -4,7 +4,11 @@ from pages.search_page import SearchPage
 from pages.cart_page import CartPage
 import json
 from pages.checkout_page import CheckoutPage
-
+import os
+import sys
+# 🔧 Add the root folder to sys.path so that 'pages' can be imported
+project_root = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, project_root)
 
 def load_test_data(file_path):
     with open(file_path, "r") as file:
