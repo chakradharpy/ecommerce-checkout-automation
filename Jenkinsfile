@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        // Set PYTHONPATH so relative imports like "from pages import ..." work
-        PYTHONPATH = "${env.WORKSPACE}"
+        // Optional: Useful for future environment variables
+        // PYTHONPATH is better handled directly in the bat step for Windows
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://your.git.repo/url.git'
+                git branch: 'master', url: 'https://your.git.repo.url.git'
             }
         }
 
@@ -21,18 +21,20 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                // Run pytest and generate both HTML and JUnit reports
-                bat 'pytest --maxfail=5 --disable-warnings --html=report.html --self-contained-html --junitxml=test-results.xml'
+                bat '''
+                REM Add workspace to Python path for module imports like 'from pages.home_page import HomePage'
+                set PYTHONPATH=%cd%
+                
+                REM Run pytest and generate HTML + JUnit reports
+                pytest --maxfail=5 --disable-warnings --html=report.html --self-contained-html --junitxml=test-results.xml
+                '''
             }
         }
     }
 
     post {
         always {
-            // Archive the HTML report for download
             archiveArtifacts artifacts: 'report.html', allowEmptyArchive: true
-
-            // Enable Jenkins to parse test results for pass/fail trends
             junit 'test-results.xml'
         }
     }
