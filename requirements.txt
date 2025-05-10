@@ -1,6 +1,4 @@
-
 selenium==4.16.0
-pytest
-pytest-html
-webdriver-manager
-
+pytest==7.4.2
+pytest-html==4.0.2
+webdriver-manager==4.0.1

@@ -8,6 +8,10 @@
 
 4. pytest-html: For beautiful test reports
 
+5. Set python path
+set PYTHONPATH=%cd%
+
+
 # Clone the repository:
 
 git clone https://github.com/chakradharpy/ecommerce-checkout-automation.git

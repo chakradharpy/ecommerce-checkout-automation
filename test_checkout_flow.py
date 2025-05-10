@@ -14,6 +14,7 @@ def load_test_data(file_path):
 class TestEndToEndCheckout:
     def test_end_to_end_checkout(self):
         data = load_test_data(r"C:\Users\Chakradhar.corp\Desktop\automation_task\data\test_data.json")
+        
 
         hp = HomePage(self.driver)
         hp.open()

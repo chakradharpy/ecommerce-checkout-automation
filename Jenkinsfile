@@ -1,27 +1,39 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    PIP_INDEX_URL = "https://pypi.org/simple"  // Or use a fast mirror like https://mirrors.aliyun.com/pypi/simple/
-    PIP_TIMEOUT = "120"
-    PIP_RETRIES = "5"
-  }
-
-  stages {
-    stage('Install Python Dependencies') {
-      steps {
-        retry(3) {
-          sh '''
-            python3 -m venv venv
-            source venv/bin/activate
-            pip install --upgrade pip
-            pip install -r requirements.txt \
-              --default-timeout=$PIP_TIMEOUT \
-              --retries=$PIP_RETRIES \
-              -i $PIP_INDEX_URL
-          '''
-        }
-      }
+    environment {
+        // Set PYTHONPATH so relative imports like "from pages import ..." work
+        PYTHONPATH = "${env.WORKSPACE}"
     }
-  }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'master', url: 'https://your.git.repo/url.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                // Run pytest and generate both HTML and JUnit reports
+                bat 'pytest --maxfail=5 --disable-warnings --html=report.html --self-contained-html --junitxml=test-results.xml'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Archive the HTML report for download
+            archiveArtifacts artifacts: 'report.html', allowEmptyArchive: true
+
+            // Enable Jenkins to parse test results for pass/fail trends
+            junit 'test-results.xml'
+        }
+    }
 }
